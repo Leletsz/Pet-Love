@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@tailwind utilities;
+@theme {
+  --color-primary: #ff4f8b;
+  --color-primaryLight: #ff6fb3;
+  --color-purpleDark: #1a0540;
+  --color-purpleMedium: #2a0a70;
+  --color-orangeAccent: #ffa52e;
+  --font-diff: "Montserrat", sans-serif;
+}
+@layer base {
+  body {
+    @apply bg-purpleMedium;
+  }
+}
