@@ -11,5 +11,6 @@
 @layer base {
   body {
     @apply bg-purpleMedium;
+    @apply text-white;
   }
 }

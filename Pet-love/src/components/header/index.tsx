@@ -5,7 +5,7 @@ import Logo from "../../assets/logo.png";
 export default function Header() {
   return (
     <div>
-      <header className="w-full px-1 text-pink-400 bg-purpleDark">
+      <header className="w-full z-50 px-1 text-pink-400 bg-purpleDark">
         <nav className="w-full max-w-7xl h-14 flex items-center px-5 justify-between mx-auto">
           <Link to={"/"}>
             <img className="w-full size-17" src={Logo}></img>
