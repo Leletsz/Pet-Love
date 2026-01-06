@@ -3,7 +3,8 @@ import { CartContext } from "../../context/cartContext";
 import { Link } from "react-router-dom";
 
 export function Cart() {
-  const { cart, total, addItemCart, removeItemCart } = useContext(CartContext);
+  const { cart, total, addItemCart, removeItemCart, deleteItem } =
+    useContext(CartContext);
   return (
     <div>
       <h1 className="text-center font-bold py-5 text-3xl">
@@ -21,50 +22,51 @@ export function Cart() {
         </div>
       )}
       <main className="w-full max-w-7xl px-3 pt-24 mb-8 mx-auto">
-        {cart.map((item) => (
-          <div className="flex flex-col justify-between gap-8 md:flex-row">
-            <section className="w-full">
+        <div className="flex flex-col justify-between gap-8 md:flex-row">
+          <section className="w-full">
+            {cart.map((item) => (
               <article key={item.id} className="border-b  py-2.5 ">
                 <div className="flex items-center sm:items-start">
-                  <img
-                    className=" rounded-lg w-20"
-                    src="https://sujeitoprogramador.com/wp-content/uploads/2023/06/racao1.png"
-                  ></img>
+                  <img className=" rounded-lg w-20" src={item.cover}></img>
                   <div className="w-full sm:flex justify-between sm:gap-4">
                     <div className="px-2">
-                      <h2 className="text-2xl ">
-                        Ração Royal Canin Medium Ageing 15kg
-                      </h2>
+                      <h2 className="text-2xl ">{item.title}</h2>
                       <p className="text-left text-green-300">Em estoque</p>
                     </div>
                     <div className="text-3xl sm:text-right">
-                      <span>R$ 475,99</span>
+                      <span>{item.price}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center  gap-3">
                   <div className="flex border rounded-2xl gap-6">
                     <button
-                      onClick={() => addItemCart}
+                      onClick={() => addItemCart(item)}
                       className="cursor-pointer px-1.5 rounded text-white font-medium flex items-center justify-center"
                     >
                       +
                     </button>
-                    1
+                    {item.amount}
                     <button
-                      onClick={() => removeItemCart}
+                      onClick={() => removeItemCart(item)}
                       className="cursor-pointer px-1.5 rounded text-white font-medium flex items-center justify-center"
                     >
                       -
                     </button>
                   </div>
 
-                  <button className="cursor-pointer border rounded-2xl py-1 px-3 text-red-500">
+                  <button
+                    onClick={() => deleteItem(item)}
+                    className="cursor-pointer border rounded-2xl py-1 px-3 text-red-500"
+                  >
                     Excluir
                   </button>
                 </div>
               </article>
-            </section>
+            ))}
+          </section>
+
+          {cart.length >= 1 && (
             <section className="flex flex-col w-full md:max-w-xs rounded-md border border-gray-200 shadow max-h-fit p-4">
               <h2 className="text-2xl">Resumo da compra</h2>
               <p className="mb-3">Produtos ({cart.length})</p>
@@ -77,8 +79,8 @@ export function Cart() {
                 Comprar agora
               </button>
             </section>
-          </div>
-        ))}
+          )}
+        </div>
       </main>
     </div>
   );

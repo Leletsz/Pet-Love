@@ -1,3 +1,4 @@
+//npx json-server --watch db.json --port 3000
 import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
@@ -5,6 +6,8 @@ import { api } from "../../services/api";
 import background from "../../assets/background.png";
 import { CartContext } from "../../context/cartContext";
 import { useContext } from "react";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export interface ProductsProps {
   id: number;
@@ -16,6 +19,7 @@ export interface ProductsProps {
 export function Home() {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductsProps[]>([]);
+  const { addItemCart } = useContext(CartContext);
 
   useEffect(() => {
     async function getProducts() {
@@ -39,13 +43,15 @@ export function Home() {
       </h1>
     );
   }
-  const { addItemCart } = useContext(CartContext);
+
   function handleAddCartItem(product: ProductsProps) {
     addItemCart(product);
-    //toast.success("Produto adicionado no carrinho");
+    console.log("boa");
+    toast.success("Produto adicionado!");
   }
   return (
     <div>
+      <Toaster position="top-right" reverseOrder={false} />
       <section
         className={`w-full text-center flex rounded-2xl items-center justify-start min-h-screen bg-cover bg-center bg-no-repeat relative md:bg-left  `}
         style={{
@@ -73,7 +79,9 @@ export function Home() {
       <main className="w-full max-w-7xl mx-auto px-4 text-center ">
         <h1 className="text-3xl flex gap-2 font-bold items-center justify-center font-diff text-white py-6">
           Nossos produtos{" "}
-          <h2 className="flex font-light text-xl ">(7 produtos)</h2>
+          <span className="flex font-light text-xl ">
+            ({products.length} produtos)
+          </span>
         </h1>
 
         <div
