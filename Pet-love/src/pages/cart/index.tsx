@@ -1,12 +1,18 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/cartContext";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export function Cart() {
   const { cart, total, addItemCart, removeItemCart, deleteItem } =
     useContext(CartContext);
+
+  function handleSubmit() {
+    toast.success("Compra feita com sucesso!");
+  }
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-center font-bold py-5 text-3xl">
         Carrinho de compras
       </h1>
@@ -24,6 +30,7 @@ export function Cart() {
       <main className="w-full max-w-7xl px-3 pt-24 mb-8 mx-auto">
         <div className="flex flex-col justify-between gap-8 md:flex-row">
           <section className="w-full">
+            {cart.length !== 0 && <hr></hr>}
             {cart.map((item) => (
               <article key={item.id} className="border-b  py-2.5 ">
                 <div className="flex items-center sm:items-start">
@@ -34,7 +41,12 @@ export function Cart() {
                       <p className="text-left text-green-300">Em estoque</p>
                     </div>
                     <div className="text-3xl sm:text-right">
-                      <span>{item.price}</span>
+                      <span>
+                        {item.price.toLocaleString("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -75,7 +87,10 @@ export function Cart() {
                 <span className="font-bold text-2xl ">{total}</span>
               </div>
 
-              <button className="mt-4 bg-primary text-white py-2 rounded cursor-pointer">
+              <button
+                onClick={() => handleSubmit()}
+                className="mt-4 bg-primary text-white py-2 rounded cursor-pointer"
+              >
                 Comprar agora
               </button>
             </section>
